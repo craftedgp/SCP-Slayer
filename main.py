@@ -141,7 +141,7 @@ def update():
             if trigger not in played_sounds:
                 invoke(seen)
                 invoke(seen2, delay=4.5)
-                invoke(seen3, delay=5)
+                invoke(seen3, delay=35)
 
             if player.intersects(kill_area).hit:
                 global played_sounds2
@@ -155,30 +155,5 @@ def update():
 def get_forward_direction(entity):
     forward = entity.camera.forward if hasattr(entity, 'camera') else entity.forward
     return forward.normalized()
-
-toggle_on = False
-
-def input(key):
-    if key == 'q':
-        global toggle_on
-        toggle_on = not toggle_on
-        if toggle_on:
-            player.disable()
-            wp.enabled = True
-        else:
-            player.enable()
-            wp.enabled = False
-
-wp = WindowPanel(
-    title='Custom Window',
-    content=(
-        Text('Name:'),
-        InputField(name='name_field'),
-        Button(text='Submit', color=color.azure),
-        Slider(),
-        Slider(),
-        ButtonGroup(('test', 'eslk', 'skffk'))), popup=True)
-wp.y = wp.panel.scale_y / 2 * wp.scale_y    # center the window panel
-wp.layout()
 # ---------------------- RUN -----------------------------
 app.run()
