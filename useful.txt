@@ -1,0 +1,53 @@
+
+            y (up)
+            |
+            |
+(forward) z |
+          \ |
+           \|
+            *---------- x (right)
+
+
+           _______
+          /
+          \->
+    __
+   /  \     y
+   v  |     |
+      |  z  |                __
+          \ |               /  \
+           \|               v   |
+            *---------- x       |
+                                |
+
+X Y Z ARE LIKE THIS : postion(x, y, z) and scale and other stuff you get it
+
+                      (-.5, .5)           (.5, .5)
+  (window.top_right)_______|__(window.top)____|_______(window.top_right)
+                   |       '                  '       |
+                   |       '                  '       |
+                   |       '                  '       |
+                   |       '                  '       |
+       (window.left)       '      (0, 0)      '       (window.right or Vec2(.5*window.aspect_ratio, 0))
+                   |       '                  '       |
+                   |       '                  '       |
+                   |       '                  '       |
+                   |_______'__________________'_______|
+(window.bottom_left)       |  (window.bottom) |       (window.bottom_right)
+                      (-.5, -.5)          (.5, -.5)
+
+
+             (-.5,.5)
++---------+      0---------+
+|  (0,0)  |      |         |
+|    0    |      |         |
+|         |      |         |
++---------+      +---------+
+
+   (0,.5)
++----0----+      +---------+
+|         |      |         |
+|         |      |         0 (.5,0)
+|         |      |         |
++---------+      +---------+
+
