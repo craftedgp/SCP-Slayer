@@ -4,7 +4,7 @@ import random
 import time
 from direct.actor.Actor import Actor
 
-app = Ursina(fullscreen=False, borderless=True, vsync=True)
+app = Ursina(title='SCP SIMULATOR', fullscreen=False, borderless=True, vsync=True)
 
 # ==================== Map and player ==========================================
 ground = Entity(model='plane', scale=(1000, 1, 1000), texture='grass', texture_scale=(1000, 1000), collider='box')
