@@ -3,6 +3,7 @@ The SCP Simulator is a game where you explore various SCP Subjects without havin
 ## Developer note
 This game is still in it's early stages, so far we only have :
 - SCP 096 (and not fully finished 90% done)
+"Next thing on my to-do list for this game is to split main.py into multiple python files, I've tried this before and it didn't go well. This game can't just be one big file, there's gotta be a way" -craftedgp, 5 mins before falling asleep
 ## How to play in early stages
 First you need Python version 3.11 at least
 
