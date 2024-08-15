@@ -18,7 +18,7 @@ Once finished, double click on main.py and please give us feedback for any bugs 
 
 # ABOUT
 ## Socials
-https://dcbadge.limes.pink/api/server/https://discord.gg/cVgzu7rfQj
+![Discord Shield](https://dcbadge.limes.pink/api/server/https://discord.gg/cVgzu7rfQj)
 ## LICENSE
 
 GPL-3.0
