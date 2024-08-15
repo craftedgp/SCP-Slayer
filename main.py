@@ -8,11 +8,11 @@ from ursina.shaders import lit_with_shadows_shader
 app = Ursina(title='SCP Simulator Beta 0.9.2', fullscreen=True, borderless=True, vsync=True)
 
 # ==================== Map and player ==========================================
-# Entity.default_shader = lit_with_shadows_shader
+Entity.default_shader = lit_with_shadows_shader
 ground = Entity(model='plane', scale=(1000, 1, 1000), texture='brick', texture_scale=(1000, 1000), collider='box')
 Sky(texture='assets/sky.jpg')
-# directional_light = DirectionalLight(shadow=True)
-# directional_light.look_at(Vec3(1,-1,-1))
+directional_light = DirectionalLight(shadow=True)
+directional_light.look_at(Vec3(1,-1,-1))
 # -------------- Played Sounds shall not be played again --------------
 played_sounds = set()
 played_sounds2 = False
