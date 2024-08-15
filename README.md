@@ -20,5 +20,4 @@ Once finished, double click on main.py and please give us feedback for any bugs 
 ## Socials
 ![Discord Shield](https://dcbadge.limes.pink/api/server/https://discord.gg/cVgzu7rfQj)
 ## LICENSE
-
-GPL-3.0
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
