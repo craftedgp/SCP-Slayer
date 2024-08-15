@@ -5,11 +5,14 @@ import time
 from direct.actor.Actor import Actor
 from ursina.shaders import lit_with_shadows_shader
 
-app = Ursina(fullscreen=True, borderless=True, vsync=True)
+app = Ursina(title='SCP Simulator Beta 0.9.1', fullscreen=False, borderless=True, vsync=True)
 
 # ==================== Map and player ==========================================
-ground = Entity(model='plane', scale=(1000, 1, 1000), texture='grass', texture_scale=(1000, 1000), collider='box')
+Entity.default_shader = lit_with_shadows_shader
+ground = Entity(model='plane', scale=(1000, 1, 1000), texture='brick', texture_scale=(1000, 1000), collider='box')
 Sky(texture='assets/sky.jpg')
+directional_light = DirectionalLight(shadow=True)
+directional_light.look_at(Vec3(1,-1,-1))
 # -------------- Played Sounds shall not be played again --------------
 played_sounds = set()
 played_sounds2 = False
@@ -93,6 +96,7 @@ def death():
         elif camera.rotation_x > 90:
             camera.rotation_x = 90
         camera.position.y -= 10 * time.dt
+
 # =================== Player classes and help =======================
 '''
 Game Tester Help = gt_help
@@ -138,7 +142,7 @@ angered = Audio('assets/096/096Angered.ogg', loop=False, autoplay=False)
 raging = Audio('assets/096/096Rage.ogg', loop=True, autoplay=False)
 raging.volume = 0
 chasing_music = Audio('assets/096/096Chase.ogg', loop=True, autoplay=False)
-calm_down = Audio('assets/096/096calmdown.ogg', loop=False, autoplay=False)
+calmdown = Audio('assets/096/096calmdown.ogg', loop=False, autoplay=False)
 calm = Audio('assets/096/096.ogg', loop=True, autoplay=True)
 calm.volume = 0
 kill = 'assets/player/death.ogg'
@@ -175,6 +179,23 @@ def seen3():
     anim_run_actor.loop('scp096_skeleton|scp096_skeleton|scp096attackrun')
     anim_run.look_at_2d(player, 'y')
 
+def calm_down():
+    if calmdown and calm not in played_sounds:
+        calmdown.play()
+        calm.play()
+        anim_clamdown_actor = Actor('assets/096/anim_sit.gltf')
+        anim_clamdown_actor.loop('scp096_skeleton|scp096_skeleton|scp096_sit')
+        anim_clamdown = Entity(model=anim_sit_actor, scale=(.5, .5, .5), position=(anim_run.position), collider='box')
+        raging.stop()
+        chasing_music.stop()
+        anim_run.disable()
+        anim_run.position = (0, 0, 0)
+    played_sounds.add(calmdown)
+    played_sounds.add(calm)
+
+def reset_096():
+    pass
+
 trigger_area = Entity(model='wireframe_cube', 
                       color=color.blue, 
                       scale=(60, 10, 60), 
@@ -185,15 +206,15 @@ blur_shader = Shader(language=Shader.GLSL,
                      vertex='blur_vertex_shader.glsl', 
                      fragment='blur_fragment_shader.glsl')
 
-blur_amount = 0
+blur_amount = 90
 def apply_blur_shader():
     camera.shader = blur_shader
     camera.set_shader_input('blur_amount', blur_amount)
 # =================== View Bobbing mechanics ========================
-bob_amount_vertical = 0.1  
+bob_amount_vertical = .1
 # bob_amount_horizontal = 0.2
 bob_amount_rotation = 1
-bob_speed = 4.4
+bob_speed = 10
 bob_phase = 0  
 is_moving = False
 previous_position = player.position
@@ -243,8 +264,12 @@ def update():
                        ignore=[anim_sit], 
                        debug=False)
     # ----------- Noise Distance ------------
+    max_distance = 20
+    dist_anim_sit = distance(player.position, anim_sit.position)
+    volume_anim_sit = max (0, 1 - (dist_anim_sit / max_distance))
+    calm.volume = volume_anim_sit
+
     if 'anim_rage' and 'anim_run' in globals():
-        max_distance = 20
 
         dist_anim_rage = distance(player.position, anim_rage.position)
         volume_anim_rage = max (0, 1 - (dist_anim_rage / max_distance))
@@ -252,7 +277,7 @@ def update():
 
         dist_anim_run = distance(player.position, anim_run.position)
         volume_anim_run = max (0, 1 - (dist_anim_run / max_distance))
-        chasing_music.volume = volume_anim_run
+        raging.volume = volume_anim_run
     # ---------- Trigger --------------------
     if hit_info.hit and hit_info.entity == player:
         if angle < angle_threshold:
@@ -265,6 +290,10 @@ def update():
         anim_run.look_at_2d(player, 'y')
         if player.intersects(anim_run).hit:
             invoke(death)
+            Text(text='You died', position=(0, .5), origin=(0, 1), scale=3, color=color.white)
+            Text(text='You were killed by SCP 096', origin=(0, 0), position=(0, .3))
+            invoke(calm_down)
+            
 
 def get_forward_direction(entity):
     forward = entity.camera.forward if hasattr(entity, 'camera') else entity.forward
@@ -285,5 +314,8 @@ def input(key):
         bob_speed = 4.4
     if key == 'f1':
         toggle_ui_gt()
+    if held_keys['control'] and key == 'q':
+        return
+
 # ---------------------- RUN -----------------------------
 app.run()
