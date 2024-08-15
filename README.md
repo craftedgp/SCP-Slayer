@@ -18,7 +18,7 @@ Once finished, double click on main.py and please give us feedback for any bugs 
 
 # ABOUT
 ## Socials
-![Discord Banner 2](https://discord.com/api/guilds/730432620273598535/widget.png?style=banner2)
+https://dcbadge.limes.pink/api/server/https://discord.gg/cVgzu7rfQj
 ## LICENSE
 
 GPL-3.0
