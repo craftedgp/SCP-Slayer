@@ -1,6 +1,9 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [Beta 0.9.2] - 2024-08-15
+- SCP 096 is fully finished
+- Added shadows
 
 ## [Beta 0.9.1] - 2024-08-15
 - Added player spawn features
