@@ -5,14 +5,14 @@ import time
 from direct.actor.Actor import Actor
 from ursina.shaders import lit_with_shadows_shader
 
-app = Ursina(title='SCP Simulator Beta 0.9.1', fullscreen=False, borderless=True, vsync=True)
+app = Ursina(title='SCP Simulator Beta 0.9.2', fullscreen=True, borderless=True, vsync=True)
 
 # ==================== Map and player ==========================================
-Entity.default_shader = lit_with_shadows_shader
+# Entity.default_shader = lit_with_shadows_shader
 ground = Entity(model='plane', scale=(1000, 1, 1000), texture='brick', texture_scale=(1000, 1000), collider='box')
 Sky(texture='assets/sky.jpg')
-directional_light = DirectionalLight(shadow=True)
-directional_light.look_at(Vec3(1,-1,-1))
+# directional_light = DirectionalLight(shadow=True)
+# directional_light.look_at(Vec3(1,-1,-1))
 # -------------- Played Sounds shall not be played again --------------
 played_sounds = set()
 played_sounds2 = False
@@ -79,7 +79,7 @@ player.collider = 'box'
 player_death_sfx = 'assets/player/death2.ogg'
 player_spawn_sfx = 'assets/player/spawn.ogg'
 player_health = 100
-invoke(spawn, delay=2)
+invoke(spawn, delay=4)
 
 # ----------------- Player Death mechanis | What happens when the player's health is zero or when special events are met ---------------
 def death():
@@ -264,19 +264,19 @@ def update():
                        ignore=[anim_sit], 
                        debug=False)
     # ----------- Noise Distance ------------
-    max_distance = 20
+    max_distance = 30
     dist_anim_sit = distance(player.position, anim_sit.position)
-    volume_anim_sit = max (0, 1 - (dist_anim_sit / max_distance))
+    volume_anim_sit = max(0, 1 - (dist_anim_sit / max_distance))
     calm.volume = volume_anim_sit
 
     if 'anim_rage' and 'anim_run' in globals():
 
         dist_anim_rage = distance(player.position, anim_rage.position)
-        volume_anim_rage = max (0, 1 - (dist_anim_rage / max_distance))
+        volume_anim_rage = max(0, 1 - (dist_anim_rage / max_distance))
         raging.volume = volume_anim_rage
 
         dist_anim_run = distance(player.position, anim_run.position)
-        volume_anim_run = max (0, 1 - (dist_anim_run / max_distance))
+        volume_anim_run = max(0, 1 - (dist_anim_run / max_distance))
         raging.volume = volume_anim_run
     # ---------- Trigger --------------------
     if hit_info.hit and hit_info.entity == player:
@@ -286,14 +286,13 @@ def update():
                 invoke(seen2)
                 invoke(seen3, delay=6)
     if 'anim_run' in globals():
-        anim_run.position += anim_run.forward * time.dt * 20
+        anim_run.position += anim_run.forward * time.dt * 30
         anim_run.look_at_2d(player, 'y')
         if player.intersects(anim_run).hit:
             invoke(death)
             Text(text='You died', position=(0, .5), origin=(0, 1), scale=3, color=color.white)
             Text(text='You were killed by SCP 096', origin=(0, 0), position=(0, .3))
-            invoke(calm_down)
-            
+            invoke(calm_down, delay=2)
 
 def get_forward_direction(entity):
     forward = entity.camera.forward if hasattr(entity, 'camera') else entity.forward
@@ -314,8 +313,6 @@ def input(key):
         bob_speed = 4.4
     if key == 'f1':
         toggle_ui_gt()
-    if held_keys['control'] and key == 'q':
-        return
 
 # ---------------------- RUN -----------------------------
 app.run()
