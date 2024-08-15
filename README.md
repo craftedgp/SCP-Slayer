@@ -15,5 +15,10 @@ After that you need the [Ursina Game Engine](https://www.ursinaengine.org/) inst
 pip install ursina
 ```
 Once finished, double click on main.py and please give us feedback for any bugs or errors
+
+# ABOUT
+## Socials
+![Discord Banner 2](https://discord.com/api/guilds/730432620273598535/widget.png?style=banner2)
 ## LICENSE
+
 GPL-3.0
