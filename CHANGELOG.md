@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 - SCP 096 is fully finished
 - Added shadows
 
-## [Beta 0.9.1] - 2024-08-15
+## [Beta 0.9.1] - 2024-08-14
 - Added player spawn features
 - SCP 096 is fixed, he now chases you while facing your direction
 - Pressing F1 will give you a help screen
