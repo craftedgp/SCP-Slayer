@@ -10,9 +10,9 @@ This game is still in it's early stages, so far we only have :
 ## How to play in early stages
 First you need Python version 3.11 at least
 
-After that you need the [Ursina Game Engine](https://www.ursinaengine.org/) installed, to do that use the pip install manager that comes with Python.
+After that you need the [Ursina Game Engine](https://www.ursinaengine.org/) installed along side some other dependencies, to do that use the pip install manager that comes with Python inside your game folder.
 ```bash
-pip install ursina
+pip install -r requirements.txt
 ```
 Once finished, double click on main.py and please give us feedback for any bugs or errors
 
