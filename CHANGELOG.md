@@ -1,6 +1,9 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [Beta 0.9.3.a] 2024-08-17
+- Added player Spawn UI and Help UI
+- Split main,py into multiple files for better organisation
 ## [Beta 0.9.2] - 2024-08-15
 - SCP 096 is fully finished
 - Added shadows
