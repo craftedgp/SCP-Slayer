@@ -1,5 +1,6 @@
 # CraftedGP's diary for this project
-[2024-08-17]
+## [2024-08-17]
+
 Holy shit, I actually made it this far, last time I tried making a game in Ursina didn't go well, my dad didn't like the idea and get de-motivationg me so I gave up, never touched Ursina for 2 years, until one day. I'm like "man, I like SCP games so much, I really should make an SCP game of my own, but idk how to use any game engines other than Ursina because my dad forced to only learn Python so I have no choice but to make it in Ursina", and so it begins.
 I first Wanted to make an SCP-087-B but after a while I was overwhelmed by the mechanics of the game so I came up with another idea, "What if I made an SCP game where you explore every SCP's mechanic without reading the wiki, yeah that seems like a good idea, I'll start with SCP-096.". I honestly didn't believe that I could make SCP-096 in Python but here we are, I just made SCP-096 and I'm onto other mechanics of the game, good start.
 After SCP-096 huge messy main.py file I thought to myself "No no no, I can't just fit an entire game full of fucntions, classes, methods into one big file. That'll be a pain in the ass to work with for sure." So I had no choice but to split main.py into multiple files, so I came up with a decent file structures for the project, which is the one you currently see.
