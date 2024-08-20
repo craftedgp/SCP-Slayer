@@ -6,7 +6,7 @@ This game is still in it's early stages, so far we only have :
 
 > Next thing to add is the respawn mechanics
 ## How to play in early stages
-First you need Python version 3.11 at least
+First you need Python version 3.6 at least
 
 After that you need the [Ursina Game Engine](https://www.ursinaengine.org/) installed along side some other dependencies, to do that use the pip install manager that comes with Python inside your game folder.
 ```bash
