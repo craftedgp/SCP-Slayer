@@ -22,3 +22,4 @@ All notable changes to this project will be documented in this file.
 - Added player spawn features.
 - SCP 096 is fixed, he now chases you while facing your direction.
 - Pressing F1 will give you a help screen.
+- First ever version
