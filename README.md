@@ -1,4 +1,4 @@
-# SCP SIMULATOR Alpha 0.1.2
+# SCP SIMULATOR Alpha 0.1.2c
 The SCP Simulator is a game where you explore various SCP Subjects without having to read the SCP wiki, the game is 3D and multiplayer
 ## Developer note
 This game is still in it's early stages, so far we only have :
