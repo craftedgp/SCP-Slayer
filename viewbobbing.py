@@ -1,6 +1,6 @@
 from ursina import *
 
-app = Ursina(title='SCP Simulator Beta 0.9.2', fullscreen=True, vsync=True)
+app = Ursina(title='SCP Simulator Alpha 0.1.2', fullscreen=True, vsync=True, icon='assets/favicon.ico')
 
 bob_amount_vertical = .1
 # bob_amount_horizontal = 0.2
