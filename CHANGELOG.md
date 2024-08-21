@@ -1,8 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-## [Alpha 0.1.2b] 2024-08-24
-- Added Respawn button to respawn.
+## [Alpha 0.1.2c] 2024-08-22
+- Fixed sounds not being removed after removing SCPs
+- Fixed Spawn Text being stuck on the screen after respawn
+
+## [Alpha 0.1.2b] 2024-08-21
+- Added Respawn button.
 - Added a spawn menu to spawn SCP Subjects.
 - Made SCP 096 unspawned by default for spawning it later.
 
