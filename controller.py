@@ -1,6 +1,7 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from shaders import apply_blur_shader, remove_blur_shader
+from viewbobbing import ViewBobbing
 import config
 
 app = config.app_global
@@ -13,14 +14,17 @@ is_player_alive = True
 
 class Controller(FirstPersonController):
     def __init__(self, **kwargs):
+        global vb
         super().__init__(**kwargs)
         self.normal_speed = self.speed
         self.sprint_speed = 10
+        vb = ViewBobbing(player=self)
 
     def update(self):
         super().update()
         self.speed = self.sprint_speed if held_keys['shift'] else self.normal_speed
-
+        vb.update()
+        
     def Death(self):
         global is_player_alive
         if player_death_sfx not in played_sounds:
@@ -39,11 +43,9 @@ class Controller(FirstPersonController):
     def Respawn(self):
         if is_player_alive == False:
             Controller.Death(self)
-
             def call_respawn_thesecond():
                 Controller.Spawn(self)
-                player = Controller()
-                invoke(player.Spawn)
+                Controller()
                 self.position = Vec3(50, 0, 0)
                 self.enable()
                 remove_blur_shader()

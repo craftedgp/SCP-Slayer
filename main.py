@@ -27,12 +27,8 @@ invoke(gt_help, delay=5)
 fs = FootSteps(player=player)
 # ========================= SpawnMenu  ==============================
 SpawnMenu(player=player)
-# =================== View Bobbing mechanics ========================
-vb = ViewBobbing(player=player)
 # =================== Update and some other functions================
 def update():
-    # --------- Call the ViewBobbing update method ----------
-    vb.update()
     # --------- Call the FootStep update method ----------
     fs.update()
 

@@ -129,6 +129,7 @@ class SpawnMenu(Entity):
                 destroy(self.scp096_instance.anim_sit)
                 destroy(self.scp096_instance.anim_rage)
                 destroy(self.scp096_instance.anim_run)
+                self.scp096_instance.stop_all_audio()
                 self.scp096_instance = None
 
     def input(self, key):

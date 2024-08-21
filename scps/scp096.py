@@ -6,22 +6,6 @@ import config
 
 app = config.app_global
 
-# ==================== Assets ======================
-trigger = Audio('assets/096/Triggered.ogg', loop=False, autoplay=False)
-angered = Audio('assets/096/096Angered.ogg', loop=False, autoplay=False)
-raging = Audio('assets/096/096Rage.ogg', loop=True, autoplay=False)
-raging.volume = 0
-chasing_music = Audio('assets/096/096Chase.ogg', loop=True, autoplay=False)
-calmdown = Audio('assets/096/096CalmDown.ogg', loop=False, autoplay=False)
-calm = Audio('assets/096/096.ogg', loop=True, autoplay=True)
-calm.volume = 0
-trigger_area = Entity(model='wireframe_cube',
-                      color=color.blue,
-                      scale=(60, 10, 60),
-                      position=(0, .6, 0))
-
-played_sounds = set()
-
 
 class SpawnScp096(Entity):
     def __init__(self, target, scramble, active=True):
@@ -32,6 +16,26 @@ class SpawnScp096(Entity):
         self.anim_sit = None
         self.anim_rage = None
         self.anim_run = None
+        self.played_sounds = set()
+        
+        # ------- Audio Assets --------
+        self.trigger = Audio('assets/096/Triggered.ogg', loop=False, autoplay=False)
+        self.angered = Audio('assets/096/096Angered.ogg', loop=False, autoplay=False)
+        self.raging = Audio('assets/096/096Rage.ogg', loop=True, autoplay=False)
+        self.raging.volume = 0
+        self.chasing_music = Audio('assets/096/096Chase.ogg', loop=True, autoplay=False)
+        self.calmdown = Audio('assets/096/096CalmDown.ogg', loop=False, autoplay=False)
+        self.calm = Audio('assets/096/096.ogg', loop=True, autoplay=True)
+        self.calm.volume = 0
+
+        # ------- Trigger Area --------
+        self.trigger_area = Entity(
+            model='wireframe_cube',
+            color=color.blue,
+            scale=(60, 10, 60),
+            position=(0, .6, 0)
+        )
+        
         # ------- Sit animation --------
         anim_sit_actor = Actor('assets/096/anim_sit.gltf')
         anim_sit_actor.loop('scp096_skeleton|scp096_skeleton|scp096_sit')
@@ -53,18 +57,18 @@ class SpawnScp096(Entity):
     def seen(self):
         if not self.active:
             return
-        trigger.play()
-        played_sounds.add(trigger)
-        calm.stop()
+        self.trigger.play()
+        self.played_sounds.add(self.trigger)
+        self.calm.stop()
         self.anim_sit.disable()
-        if calm and calmdown in played_sounds:
-            played_sounds.remove(calm, calmdown)
+        if self.calm and self.calmdown in self.played_sounds:
+            self.played_sounds.remove(self.calm, self.calmdown)
 
     def seen2(self):
         if not self.active:
             return
-        angered.play()
-        played_sounds.add(angered)
+        self.angered.play()
+        self.played_sounds.add(self.angered)
         anim_rage_actor = Actor('assets/096/anim_rage.gltf')
         anim_rage_actor.loop('scp096_skeleton|scp096_skeleton|scp096_panic')
         self.anim_rage = Entity(model=anim_rage_actor, scale=(.5, .5, .5), position=(0, .6, 0), collider='box')
@@ -72,10 +76,10 @@ class SpawnScp096(Entity):
     def seen3(self):
         if not self.active:
             return
-        raging.play()
-        played_sounds.add(raging)
-        chasing_music.play()
-        played_sounds.add(chasing_music)
+        self.raging.play()
+        self.played_sounds.add(self.raging)
+        self.chasing_music.play()
+        self.played_sounds.add(self.chasing_music)
         if self.anim_rage:
             self.anim_rage.disable()
         anim_run_actor = Actor('assets/096/anim_run.gltf')
@@ -87,17 +91,25 @@ class SpawnScp096(Entity):
     def calm_down(self):
         if not self.active:
             return
-        if calmdown and calm not in played_sounds:
-            calmdown.play()
-            calm.play()
+        if self.calmdown and self.calm not in self.played_sounds:
+            self.calmdown.play()
+            self.calm.play()
             self.anim_sit.enable()
             if self.anim_run:
                 self.anim_sit.position = self.anim_run.position
                 self.anim_run.disable()
-            raging.stop()
-            chasing_music.stop()
-        played_sounds.add(calmdown)
-        played_sounds.add(calm)
+            self.raging.stop()
+            self.chasing_music.stop()
+        self.played_sounds.add(self.calmdown)
+        self.played_sounds.add(self.calm)
+
+    def stop_all_audio(self):
+        self.trigger.stop()
+        self.angered.stop()
+        self.raging.stop()
+        self.chasing_music.stop()
+        self.calmdown.stop()
+        self.calm.stop()
 
     def update(self):
         if not self.active:
@@ -106,15 +118,15 @@ class SpawnScp096(Entity):
         max_distance = 30
         dist_anim_sit = distance(self.target.position, self.anim_sit.position)
         volume_anim_sit = max(0, 1 - (dist_anim_sit / max_distance))
-        calm.volume = volume_anim_sit       
+        self.calm.volume = volume_anim_sit       
         if self.anim_rage:
             dist_anim_rage = distance(self.target.position, self.anim_rage.position)
             volume_anim_rage = max(0, 1 - (dist_anim_rage / max_distance))
-            raging.volume = volume_anim_rage        
+            self.raging.volume = volume_anim_rage        
         if self.anim_run:
             dist_anim_run = distance(self.target.position, self.anim_run.position)
             volume_anim_run = max(0, 1 - (dist_anim_run / max_distance))
-            raging.volume = volume_anim_run     
+            self.raging.volume = volume_anim_run     
 
         if controller.is_player_alive:
             if self.anim_run:
@@ -138,7 +150,7 @@ class SpawnScp096(Entity):
             # ----------------- Trigger --------------------
             if hit_info.hit and hit_info.entity == self.target:
                 if angle < angle_threshold:
-                    if trigger not in played_sounds:
+                    if self.trigger not in self.played_sounds:
                         self.seen()
                         self.seen2()
                         invoke(self.seen3, delay=6)
@@ -160,6 +172,8 @@ class SpawnScp096(Entity):
             elif not controller.is_player_alive:
                 invoke(self.calm_down)
 
+
 def get_forward_direction(entity):
     forward = entity.camera.forward if hasattr(entity, 'camera') else entity.forward
     return forward.normalized()
+
