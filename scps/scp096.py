@@ -164,7 +164,7 @@ class SpawnScp096(Entity):
                 invoke(self.calm_down, delay=2)     
                 Controller.Respawn(self)
 
-            if controller.is_player_alive:
+            if controller.is_player_alive == True:
                 if 'text1' and 'text2' in globals():
                     destroy(text1)
                     destroy(text2)

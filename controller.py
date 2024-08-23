@@ -55,8 +55,8 @@ class Controller(FirstPersonController):
             respawn_button.on_click = call_respawn_thesecond
 
     def Spawn(self):
-        global player_health, class_text
-        player_health = 100
+        global player_health, class_text, is_player_alive
+        is_player_alive = True
         Audio(player_spawn_sfx, loop=False, autoplay=True)
         if player_death_sfx in played_sounds:
             played_sounds.remove(player_death_sfx)
