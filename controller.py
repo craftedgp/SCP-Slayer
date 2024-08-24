@@ -2,6 +2,7 @@ from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from shaders import apply_blur_shader, remove_blur_shader
 from viewbobbing import ViewBobbing
+from footsteps import FootSteps
 import config
 
 app = config.app_global
@@ -14,16 +15,18 @@ is_player_alive = True
 
 class Controller(FirstPersonController):
     def __init__(self, **kwargs):
-        global vb
         super().__init__(**kwargs)
         self.normal_speed = self.speed
         self.sprint_speed = 10
-        vb = ViewBobbing(player=self)
+        self.vb = ViewBobbing(player=self)
+        self.fs = FootSteps(player=self)
 
     def update(self):
         super().update()
         self.speed = self.sprint_speed if held_keys['shift'] else self.normal_speed
-        vb.update()
+        if is_player_alive:
+            self.vb.update()
+            self.fs.update()
         
     def Death(self):
         global is_player_alive
