@@ -1,5 +1,5 @@
 # SCP SLAYER Alpha 0.1.2c
-The SCP: SLAYER is a game where you DEMOLISH various one of the most dangerous SCP Subjects that pose a threat to the SCP foundation, it might sound easy, but is it ?
+The SCP: SLAYER is a game where you DEMOLISH one of the most dangerous SCP Subjects that pose a threat to the SCP foundation, it might sound easy, but is it ?
 ## Developer note
 This game is still in it's early stages, so far we only have :
 - SCP 096
