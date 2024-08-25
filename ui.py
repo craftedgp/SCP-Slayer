@@ -3,7 +3,7 @@ import config
 
 app = config.app_global
 
-version = Text('SCP Simulator Alpha 0.1.2', color=color.white, position=window.top_left, scale=1.5)
+version = Text('SCP Slayer Alpha 0.1.2c', color=color.white, position=window.top_left, scale=1.5)
 
 '''
 Game Tester Help = gt_help
@@ -132,6 +132,7 @@ class SpawnMenu(Entity):
                 self.scp096_instance.stop_all_audio()
                 self.scp096_instance = None
 
+    # ------------- OPEN THE MENU WHEN Q IS HELD ---------------
     def input(self, key):
         # Show or hide the spawn menu with 'q'
         if held_keys['q']:

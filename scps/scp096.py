@@ -1,11 +1,9 @@
 from ursina import *
 from direct.actor.Actor import Actor
 from controller import Controller
-import controller
 import config
 
 app = config.app_global
-
 
 class SpawnScp096(Entity):
     def __init__(self, target, scramble, active=True):
@@ -16,6 +14,8 @@ class SpawnScp096(Entity):
         self.anim_sit = None
         self.anim_rage = None
         self.anim_run = None
+        self.text1 = None
+        self.text2 = None
         self.played_sounds = set()
         
         # ------- Audio Assets --------
@@ -100,8 +100,7 @@ class SpawnScp096(Entity):
                 self.anim_run.disable()
             self.raging.stop()
             self.chasing_music.stop()
-        self.played_sounds.add(self.calmdown)
-        self.played_sounds.add(self.calm)
+            self.played_sounds.clear()
 
     def stop_all_audio(self):
         self.trigger.stop()
@@ -128,7 +127,7 @@ class SpawnScp096(Entity):
             volume_anim_run = max(0, 1 - (dist_anim_run / max_distance))
             self.raging.volume = volume_anim_run     
 
-        if controller.is_player_alive:
+        if self.target.is_player_alive == True:
             if self.anim_run:
                 self.anim_run.look_at_2d(self.target, 'y')
                 self.anim_run.position += self.anim_run.forward * 10 * time.dt
@@ -154,26 +153,25 @@ class SpawnScp096(Entity):
                         self.seen()
                         self.seen2()
                         invoke(self.seen3, delay=6)
-
-            if self.anim_run and self.target.intersects(self.anim_run).hit:
-                self.target.disable()
-                global text1, text2
-                text1 = Text(text='You died', position=(0, .5), origin=(0, 1), scale=3, color=color.white)
-                text2 = Text(text='You were killed by SCP 096', origin=(0, 0), position=(0, .3))
-                controller.is_player_alive = False     
-                invoke(self.calm_down, delay=2)     
-                Controller.Respawn(self)
-
-            if controller.is_player_alive == True:
-                if 'text1' and 'text2' in globals():
-                    destroy(text1)
-                    destroy(text2)
-
-            elif not controller.is_player_alive:
+            
+            elif not self.target.is_player_alive:
                 invoke(self.calm_down)
 
+            if self.anim_run and self.target.intersects(self.anim_run).hit:
+                invoke(self.calm_down, delay=2)  
+                self.target.disable()
+                self.target.is_player_alive = False
+                if not self.target.is_player_alive:
+                    if not self.text1:
+                        self.text1 = Text(text='You died', position=(0, .5), origin=(0, 1), scale=3, color=color.white)
+                    if not self.text2:
+                        self.text2 = Text(text='You were killed by SCP 096', origin=(0, 0), position=(0, .3))
+                else:
+                    if self.text1:
+                        destroy(self.text1)
+                    if self.text2:
+                        destroy(self.text2)
 
 def get_forward_direction(entity):
     forward = entity.camera.forward if hasattr(entity, 'camera') else entity.forward
     return forward.normalized()
-
