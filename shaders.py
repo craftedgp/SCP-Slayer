@@ -1,6 +1,7 @@
 from ursina import *
+import config
 
-app = Ursina(title='SCP Simulator Alpha 0.1.2', fullscreen=True, vsync=True, icon='assets/favicon.ico')
+app = config.app_global
 
 blur_shader = Shader(language=Shader.GLSL,
                      vertex='blur_vertex_shader.glsl',

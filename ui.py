@@ -3,7 +3,7 @@ import config
 
 app = config.app_global
 
-version = Text('SCP Slayer Alpha 0.1.2c', color=color.white, position=window.top_left, scale=1.5)
+version = Text(f'{config.app_title}', color=color.white, position=window.top_left, scale=1.5)
 
 '''
 Game Tester Help = gt_help
